@@ -18,7 +18,7 @@ public class HomeScreen extends javax.swing.JFrame {
     int[] numDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     String[][] calendar = new String[7][7];
-    DefaultTableModel dataModel = new DefaultTableModel(days,numDays);
+
 
     public HomeScreen() {
         initComponents();
