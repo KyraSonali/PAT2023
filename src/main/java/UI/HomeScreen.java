@@ -17,12 +17,34 @@ public class HomeScreen extends javax.swing.JFrame {
 
     int[] numDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    String[][] calendar = new String[7][7];
+    public String[][] getCal(int startDay, int numDaysInMonth) {
+        String[][] calendar = new String[6][7];
+        int currentDay = 1;
+        for (int week = 0; week < 7; week++) {
+            for (int day = 0; day < 7; day++) {
+                
+                calendar[week][day] = currentDay + "";
+                currentDay++;
+                if (currentDay > numDaysInMonth) {
+                    break;
+                }
 
+            }
+            if (currentDay > numDaysInMonth) {
+                break;
+            }
+
+        }
+
+        return calendar;
+
+    }
 
     public HomeScreen() {
         initComponents();
 
+        DefaultTableModel model = new DefaultTableModel(getCal(7, 28), days);
+        CalendarTable.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +53,6 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         parentPanel = new javax.swing.JPanel();
-        cardFive = new javax.swing.JPanel();
         cardFour = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -44,7 +65,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         currentGoalsHeadingLbl1 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        CalendarModel = new javax.swing.JTable();
+        CalendarTable = new javax.swing.JTable();
         cardSix = new javax.swing.JPanel();
         cardOne = new javax.swing.JPanel();
         userImage = new javax.swing.JLabel();
@@ -88,6 +109,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        cardFive = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         P2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -106,10 +128,6 @@ public class HomeScreen extends javax.swing.JFrame {
 
         parentPanel.setBackground(new java.awt.Color(44, 42, 74));
         parentPanel.setLayout(new java.awt.CardLayout());
-
-        cardFive.setBackground(new java.awt.Color(153, 153, 255));
-        cardFive.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        parentPanel.add(cardFive, "card6");
 
         cardFour.setBackground(new java.awt.Color(78, 81, 140));
         cardFour.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -173,7 +191,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
         cardThree.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
 
-        CalendarModel.setModel(new javax.swing.table.DefaultTableModel(
+        CalendarTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -184,7 +202,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(CalendarModel);
+        jScrollPane6.setViewportView(CalendarTable);
 
         cardThree.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
@@ -416,7 +434,13 @@ public class HomeScreen extends javax.swing.JFrame {
 
         parentPanel.add(cardTwo, "card7");
 
+        cardFive.setBackground(new java.awt.Color(153, 153, 255));
+        cardFive.setPreferredSize(new java.awt.Dimension(500, 500));
+        cardFive.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        parentPanel.add(cardFive, "card6");
+
         jPanel2.setBackground(new java.awt.Color(44, 42, 74));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         P2.setBackground(new java.awt.Color(218, 191, 255));
         P2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,6 +462,8 @@ public class HomeScreen extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel2.add(P2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 96, -1, -1));
+
         P3.setBackground(new java.awt.Color(218, 191, 255));
         P3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -457,6 +483,8 @@ public class HomeScreen extends javax.swing.JFrame {
             P3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jPanel2.add(P3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 186, -1, -1));
 
         P4.setBackground(new java.awt.Color(218, 191, 255));
         P4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -478,6 +506,8 @@ public class HomeScreen extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel2.add(P4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 276, -1, -1));
+
         P5.setBackground(new java.awt.Color(218, 191, 255));
         P5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -498,6 +528,8 @@ public class HomeScreen extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel2.add(P5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 372, -1, -1));
+
         P6.setBackground(new java.awt.Color(218, 191, 255));
         P6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -511,12 +543,18 @@ public class HomeScreen extends javax.swing.JFrame {
         P6.setLayout(P6Layout);
         P6Layout.setHorizontalGroup(
             P6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         P6Layout.setVerticalGroup(
             P6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel6))
         );
+
+        jPanel2.add(P6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
 
         P1.setBackground(new java.awt.Color(218, 191, 255));
         P1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -538,41 +576,7 @@ public class HomeScreen extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(P3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(P2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(P6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(P1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(P4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(P5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(P1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(P2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(P3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(P4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(P5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(P6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel2.add(P1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 6, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -696,7 +700,7 @@ public class HomeScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable CalendarModel;
+    private javax.swing.JTable CalendarTable;
     private javax.swing.JPanel P1;
     private javax.swing.JPanel P2;
     private javax.swing.JPanel P3;
