@@ -4,7 +4,9 @@
  */
 package UI;
 
+import java.awt.Dimension;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,7 +24,7 @@ public class HomeScreen extends javax.swing.JFrame {
         int currentDay = 1;
         for (int week = 0; week < 7; week++) {
             for (int day = 0; day < 7; day++) {
-                
+
                 calendar[week][day] = currentDay + "";
                 currentDay++;
                 if (currentDay > numDaysInMonth) {
@@ -45,6 +47,11 @@ public class HomeScreen extends javax.swing.JFrame {
 
         DefaultTableModel model = new DefaultTableModel(getCal(7, 28), days);
         CalendarTable.setModel(model);
+        CalendarTable.setRowHeight(100); // Set the default row height
+
+//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+//        renderer.setPreferredSize(new Dimension(100, 100)); // Set preferred cell size
+//        CalendarTable.setDefaultRenderer(Object.class, renderer);
     }
 
     @SuppressWarnings("unchecked")
@@ -141,6 +148,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         parentPanel.setBackground(new java.awt.Color(44, 42, 74));
         parentPanel.setLayout(new java.awt.CardLayout());
@@ -332,9 +340,17 @@ public class HomeScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        CalendarTable.setColumnSelectionAllowed(false);
+        CalendarTable.setRowSelectionAllowed(false);
+        CalendarTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        CalendarTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CalendarTableMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(CalendarTable);
 
-        calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         parentPanel.add(calendar, "card4");
 
@@ -831,6 +847,11 @@ public class HomeScreen extends javax.swing.JFrame {
         parentPanel.revalidate();
     }//GEN-LAST:event_P6MouseClicked
 
+    private void CalendarTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalendarTableMouseClicked
+       String day = (String) CalendarTable.getValueAt(CalendarTable.getSelectedRow(),CalendarTable.getSelectedColumn());
+        System.out.println(day);
+    }//GEN-LAST:event_CalendarTableMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -925,8 +946,6 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
