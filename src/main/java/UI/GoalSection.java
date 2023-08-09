@@ -56,6 +56,8 @@ public class GoalSection extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(78, 81, 140));
+        jPanel1.setMinimumSize(new java.awt.Dimension(514, 550));
+        jPanel1.setPreferredSize(new java.awt.Dimension(514, 550));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel7.setBackground(new java.awt.Color(44, 42, 74));
