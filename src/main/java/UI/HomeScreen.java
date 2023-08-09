@@ -53,7 +53,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         parentPanel = new javax.swing.JPanel();
-        cardFour = new javax.swing.JPanel();
+        diaryEntry = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -61,13 +61,14 @@ public class HomeScreen extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        cardThree = new javax.swing.JPanel();
+        calendar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         currentGoalsHeadingLbl1 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         CalendarTable = new javax.swing.JTable();
-        cardSix = new javax.swing.JPanel();
-        cardOne = new javax.swing.JPanel();
+        account = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        dashboard = new javax.swing.JPanel();
         userImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -90,7 +91,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         goalsLbl = new javax.swing.JLabel();
-        cardTwo = new javax.swing.JPanel();
+        goals = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         goalsList = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
@@ -109,7 +110,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        cardFive = new javax.swing.JPanel();
+        awareness = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         P2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -129,8 +130,8 @@ public class HomeScreen extends javax.swing.JFrame {
         parentPanel.setBackground(new java.awt.Color(44, 42, 74));
         parentPanel.setLayout(new java.awt.CardLayout());
 
-        cardFour.setBackground(new java.awt.Color(78, 81, 140));
-        cardFour.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        diaryEntry.setBackground(new java.awt.Color(78, 81, 140));
+        diaryEntry.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(44, 42, 74));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -158,12 +159,12 @@ public class HomeScreen extends javax.swing.JFrame {
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
         jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 120, -1));
 
-        cardFour.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 460, 500));
+        diaryEntry.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 460, 500));
 
-        parentPanel.add(cardFour, "card5");
+        parentPanel.add(diaryEntry, "card5");
 
-        cardThree.setBackground(new java.awt.Color(78, 81, 140));
-        cardThree.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        calendar.setBackground(new java.awt.Color(78, 81, 140));
+        calendar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel7.setBackground(new java.awt.Color(44, 42, 74));
 
@@ -189,7 +190,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        cardThree.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
+        calendar.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
 
         CalendarTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -204,31 +205,39 @@ public class HomeScreen extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(CalendarTable);
 
-        cardThree.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        parentPanel.add(cardThree, "card4");
+        parentPanel.add(calendar, "card4");
 
-        cardSix.setBackground(new java.awt.Color(44, 42, 74));
+        account.setBackground(new java.awt.Color(44, 42, 74));
 
-        javax.swing.GroupLayout cardSixLayout = new javax.swing.GroupLayout(cardSix);
-        cardSix.setLayout(cardSixLayout);
-        cardSixLayout.setHorizontalGroup(
-            cardSixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+        jLabel16.setText("jLabel16");
+
+        javax.swing.GroupLayout accountLayout = new javax.swing.GroupLayout(account);
+        account.setLayout(accountLayout);
+        accountLayout.setHorizontalGroup(
+            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(436, Short.MAX_VALUE))
         );
-        cardSixLayout.setVerticalGroup(
-            cardSixLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 593, Short.MAX_VALUE)
+        accountLayout.setVerticalGroup(
+            accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(488, Short.MAX_VALUE))
         );
 
-        parentPanel.add(cardSix, "card7");
+        parentPanel.add(account, "card7");
 
-        cardOne.setBackground(new java.awt.Color(78, 81, 140));
-        cardOne.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        dashboard.setBackground(new java.awt.Color(78, 81, 140));
+        dashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         userImage.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\chakras (1).png")); // NOI18N
         userImage.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
-        cardOne.add(userImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        dashboard.add(userImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(44, 42, 74));
@@ -240,62 +249,62 @@ public class HomeScreen extends javax.swing.JFrame {
         jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
         jScrollPane1.setViewportView(jTextArea1);
 
-        cardOne.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 280, 110));
+        dashboard.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 280, 110));
 
         stressLevelsLbl.setBackground(new java.awt.Color(255, 255, 255));
         stressLevelsLbl.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         stressLevelsLbl.setForeground(new java.awt.Color(255, 255, 255));
         stressLevelsLbl.setText("Stress Levels:");
         stressLevelsLbl.setToolTipText("");
-        cardOne.add(stressLevelsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 90, 20));
-        cardOne.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 110, -1, -1));
+        dashboard.add(stressLevelsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 90, 20));
+        dashboard.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 110, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Kyra Balliram");
-        cardOne.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 80, 20));
+        dashboard.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 80, 20));
 
         addDailyNoteLbl.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\neon-notes (1).png")); // NOI18N
         addDailyNoteLbl.setText("add act");
-        cardOne.add(addDailyNoteLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 60, 70));
+        dashboard.add(addDailyNoteLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 60, 70));
 
         addActivityLbl.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\neon-notes (1).png")); // NOI18N
-        cardOne.add(addActivityLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 70, 70));
+        dashboard.add(addActivityLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 70, 70));
 
         addHydrationLevelLbl.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\neon-notes (1).png")); // NOI18N
         addHydrationLevelLbl.setText("add act");
-        cardOne.add(addHydrationLevelLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 70, 70));
+        dashboard.add(addHydrationLevelLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 70, 70));
 
         addMedsLbl.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\neon-notes (1).png")); // NOI18N
         addMedsLbl.setText("add act");
-        cardOne.add(addMedsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 60, 70));
+        dashboard.add(addMedsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 60, 70));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("add daily note");
-        cardOne.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 80, -1));
+        dashboard.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 80, -1));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("add activity");
-        cardOne.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        dashboard.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("add hydration level");
-        cardOne.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, -1, 20));
+        dashboard.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, -1, 20));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("add medication");
-        cardOne.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 100, -1));
+        dashboard.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 100, -1));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Last 7 days:");
         jLabel14.setToolTipText("");
-        cardOne.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 112, 30));
+        dashboard.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 112, 30));
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -312,7 +321,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jCheckBox6.setText("jCheckBox1");
         jPanel3.add(jCheckBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
-        cardOne.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 200, 230));
+        dashboard.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 200, 230));
 
         jTextArea2.setBackground(new java.awt.Color(44, 42, 74));
         jTextArea2.setColumns(20);
@@ -320,19 +329,19 @@ public class HomeScreen extends javax.swing.JFrame {
         jTextArea2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
         jScrollPane2.setViewportView(jTextArea2);
 
-        cardOne.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 190, 240));
+        dashboard.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 190, 240));
 
         goalsLbl.setBackground(new java.awt.Color(255, 255, 255));
         goalsLbl.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         goalsLbl.setForeground(new java.awt.Color(255, 255, 255));
         goalsLbl.setText("Goals:");
         goalsLbl.setToolTipText("");
-        cardOne.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 70, 20));
+        dashboard.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 70, 20));
 
-        parentPanel.add(cardOne, "card2");
+        parentPanel.add(dashboard, "card2");
 
-        cardTwo.setBackground(new java.awt.Color(78, 81, 140));
-        cardTwo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        goals.setBackground(new java.awt.Color(78, 81, 140));
+        goals.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         goalsList.setBackground(new java.awt.Color(44, 42, 74));
         goalsList.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(125, 239, 255)));
@@ -344,7 +353,7 @@ public class HomeScreen extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(goalsList);
 
-        cardTwo.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 200));
+        goals.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 200));
 
         jPanel4.setBackground(new java.awt.Color(44, 42, 74));
 
@@ -370,7 +379,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        cardTwo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
+        goals.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
 
         goalsPreviewTxtArea.setBackground(new java.awt.Color(44, 42, 74));
         goalsPreviewTxtArea.setColumns(20);
@@ -380,7 +389,7 @@ public class HomeScreen extends javax.swing.JFrame {
         goalsPreviewTxtArea.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(125, 239, 255)));
         jScrollPane4.setViewportView(goalsPreviewTxtArea);
 
-        cardTwo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 230));
+        goals.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 230));
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -392,7 +401,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel15.setText("jLabel7");
         jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 120, 30));
 
-        cardTwo.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, 60));
+        goals.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, 60));
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 255));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -404,7 +413,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel18.setText("jLabel7");
         jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 120, 30));
 
-        cardTwo.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 200, 50));
+        goals.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 200, 50));
 
         addGoalPanel.setBackground(new java.awt.Color(153, 153, 255));
         addGoalPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -416,28 +425,28 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel7.setText("jLabel7");
         addGoalPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 120, 30));
 
-        cardTwo.add(addGoalPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 200, 50));
+        goals.add(addGoalPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 200, 50));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(218, 191, 255));
         jLabel17.setText("Current Goals:");
-        cardTwo.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, -1));
+        goals.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, -1));
 
         jLabel19.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(218, 191, 255));
         jLabel19.setText("Goals Completed:");
-        cardTwo.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 20));
+        goals.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 20));
 
         jLabel20.setIcon(new javax.swing.ImageIcon("C:\\Users\\kyrab\\Documents\\NetBeansProjects\\PAT2023\\data\\goal (1).png")); // NOI18N
         jLabel20.setText("jLabel20");
-        cardTwo.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 200, 190));
+        goals.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 200, 190));
 
-        parentPanel.add(cardTwo, "card7");
+        parentPanel.add(goals, "card7");
 
-        cardFive.setBackground(new java.awt.Color(153, 153, 255));
-        cardFive.setPreferredSize(new java.awt.Dimension(500, 500));
-        cardFive.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        parentPanel.add(cardFive, "card6");
+        awareness.setBackground(new java.awt.Color(153, 153, 255));
+        awareness.setPreferredSize(new java.awt.Dimension(500, 500));
+        awareness.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        parentPanel.add(awareness, "card6");
 
         jPanel2.setBackground(new java.awt.Color(44, 42, 74));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -620,7 +629,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private void P2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P2MouseClicked
 
         parentPanel.removeAll();
-        parentPanel.add(cardTwo);
+        parentPanel.add(goals);
         parentPanel.repaint();
         parentPanel.revalidate();
 
@@ -629,7 +638,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void P3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P3MouseClicked
         parentPanel.removeAll();
-        parentPanel.add(cardThree);
+        parentPanel.add(calendar);
         parentPanel.repaint();
         parentPanel.revalidate();
 
@@ -637,7 +646,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void P1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P1MouseClicked
         parentPanel.removeAll();
-        parentPanel.add(cardOne);
+        parentPanel.add(dashboard);
         parentPanel.repaint();
         parentPanel.revalidate();
 
@@ -645,7 +654,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void P4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P4MouseClicked
         parentPanel.removeAll();
-        parentPanel.add(cardFour);
+        parentPanel.add(diaryEntry);
         parentPanel.repaint();
         parentPanel.revalidate();
 
@@ -654,14 +663,14 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void P5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P5MouseClicked
         parentPanel.removeAll();
-        parentPanel.add(cardFive);
+        parentPanel.add(awareness);
         parentPanel.repaint();
         parentPanel.revalidate();
     }//GEN-LAST:event_P5MouseClicked
 
     private void P6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P6MouseClicked
         parentPanel.removeAll();
-        parentPanel.add(cardSix);
+        parentPanel.add(account);
         parentPanel.repaint();
         parentPanel.revalidate();
     }//GEN-LAST:event_P6MouseClicked
@@ -707,19 +716,19 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel P4;
     private javax.swing.JPanel P5;
     private javax.swing.JPanel P6;
+    private javax.swing.JPanel account;
     private javax.swing.JLabel addActivityLbl;
     private javax.swing.JLabel addDailyNoteLbl;
     private javax.swing.JPanel addGoalPanel;
     private javax.swing.JLabel addHydrationLevelLbl;
     private javax.swing.JLabel addMedsLbl;
-    private javax.swing.JPanel cardFive;
-    private javax.swing.JPanel cardFour;
-    private javax.swing.JPanel cardOne;
-    private javax.swing.JPanel cardSix;
-    private javax.swing.JPanel cardThree;
-    private javax.swing.JPanel cardTwo;
+    private javax.swing.JPanel awareness;
+    private javax.swing.JPanel calendar;
     private javax.swing.JLabel currentGoalsHeadingLbl;
     private javax.swing.JLabel currentGoalsHeadingLbl1;
+    private javax.swing.JPanel dashboard;
+    private javax.swing.JPanel diaryEntry;
+    private javax.swing.JPanel goals;
     private javax.swing.JLabel goalsLbl;
     private javax.swing.JList<String> goalsList;
     private javax.swing.JTextArea goalsPreviewTxtArea;
@@ -739,6 +748,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
