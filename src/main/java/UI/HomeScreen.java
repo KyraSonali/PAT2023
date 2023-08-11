@@ -83,6 +83,8 @@ public class HomeScreen extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         goalsLbl = new javax.swing.JLabel();
+        goalsLbl1 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
         diaryEntry = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -91,22 +93,31 @@ public class HomeScreen extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel26 = new javax.swing.JLabel();
+        currentGoalsHeadingLbl2 = new javax.swing.JLabel();
         calendar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         currentGoalsHeadingLbl1 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         CalendarTable = new javax.swing.JTable();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTextArea5 = new javax.swing.JTextArea();
+        jButton12 = new javax.swing.JButton();
         goals = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         goalsList = new javax.swing.JList<>();
@@ -128,11 +139,26 @@ public class HomeScreen extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         awareness = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
+        jLabel34 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        currentGoalsHeadingLbl3 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         P2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -244,7 +270,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jCheckBox6.setText("jCheckBox1");
         jPanel3.add(jCheckBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
-        dashboard.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 200, 230));
+        dashboard.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 200, 130));
 
         jTextArea2.setBackground(new java.awt.Color(44, 42, 74));
         jTextArea2.setColumns(20);
@@ -252,14 +278,22 @@ public class HomeScreen extends javax.swing.JFrame {
         jTextArea2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
         jScrollPane2.setViewportView(jTextArea2);
 
-        dashboard.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 190, 240));
+        dashboard.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 190, 230));
 
         goalsLbl.setBackground(new java.awt.Color(255, 255, 255));
         goalsLbl.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         goalsLbl.setForeground(new java.awt.Color(255, 255, 255));
-        goalsLbl.setText("Goals:");
+        goalsLbl.setText("Hydration Level:");
         goalsLbl.setToolTipText("");
-        dashboard.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 70, 20));
+        dashboard.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 100, 20));
+
+        goalsLbl1.setBackground(new java.awt.Color(255, 255, 255));
+        goalsLbl1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        goalsLbl1.setForeground(new java.awt.Color(255, 255, 255));
+        goalsLbl1.setText("Goals:");
+        goalsLbl1.setToolTipText("");
+        dashboard.add(goalsLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 70, 20));
+        dashboard.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
 
         parentPanel.add(dashboard, "card2");
 
@@ -273,28 +307,48 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
-        jPanel8.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 72, 37));
+        jPanel8.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 72, 37));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
-        jPanel8.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 240, 37));
+        jPanel8.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 240, 37));
 
         jTextField1.setText("<heading>");
         jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
-        jPanel8.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 390, 42));
+        jPanel8.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 390, 42));
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
         jTextArea3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 222, 255)));
         jScrollPane5.setViewportView(jTextArea3);
 
-        jPanel8.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 390, 220));
+        jPanel8.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 390, 220));
 
         jButton1.setText("Submit");
-        jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(7, 222, 255)));
-        jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 120, -1));
+        jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, 120, -1));
+
+        jLabel24.setBackground(new java.awt.Color(7, 222, 255));
+        jLabel24.setForeground(new java.awt.Color(218, 191, 255));
+        jLabel24.setText("How do you feel:");
+        jPanel8.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 100, 20));
+
+        jLabel25.setForeground(new java.awt.Color(218, 191, 255));
+        jLabel25.setText("Date of Entry:");
+        jPanel8.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 100, 40));
+        jPanel8.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 240, 40));
+
+        jLabel26.setForeground(new java.awt.Color(218, 191, 255));
+        jLabel26.setText("Mood:");
+        jPanel8.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
 
         diaryEntry.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 460, 500));
+
+        currentGoalsHeadingLbl2.setBackground(new java.awt.Color(102, 255, 255));
+        currentGoalsHeadingLbl2.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        currentGoalsHeadingLbl2.setForeground(new java.awt.Color(153, 255, 255));
+        currentGoalsHeadingLbl2.setText("Capture A Thought:");
+        diaryEntry.add(currentGoalsHeadingLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
 
         parentPanel.add(diaryEntry, "card5");
 
@@ -308,16 +362,16 @@ public class HomeScreen extends javax.swing.JFrame {
         currentGoalsHeadingLbl1.setBackground(new java.awt.Color(102, 255, 255));
         currentGoalsHeadingLbl1.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         currentGoalsHeadingLbl1.setForeground(new java.awt.Color(153, 255, 255));
-        currentGoalsHeadingLbl1.setText("My Thoughts:");
+        currentGoalsHeadingLbl1.setText("My Year");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(222, Short.MAX_VALUE)
+                .addContainerGap(239, Short.MAX_VALUE)
                 .addComponent(currentGoalsHeadingLbl1)
-                .addGap(201, 201, 201))
+                .addGap(222, 222, 222))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +394,6 @@ public class HomeScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        CalendarTable.setColumnSelectionAllowed(false);
         CalendarTable.setRowSelectionAllowed(false);
         CalendarTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         CalendarTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -350,7 +403,17 @@ public class HomeScreen extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(CalendarTable);
 
-        calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+
+        jLabel27.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel27.setText("<month>");
+        calendar.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 80, 20));
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-left (2).png"))); // NOI18N
+        calendar.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 40, 40));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-right (2).png"))); // NOI18N
+        calendar.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 40, 40));
 
         parentPanel.add(calendar, "card4");
 
@@ -369,13 +432,7 @@ public class HomeScreen extends javax.swing.JFrame {
         jTextArea4.setRows(5);
         jScrollPane7.setViewportView(jTextArea4);
 
-        jPanel17.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 200, 180));
-
-        jLabel21.setText("<age>");
-        jPanel17.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 160, 30));
-
-        jLabel22.setText("<name and surname>");
-        jPanel17.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 160, 30));
+        jPanel17.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, 160));
 
         jButton2.setText("Medical History");
         jPanel17.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 170, 40));
@@ -383,11 +440,21 @@ public class HomeScreen extends javax.swing.JFrame {
         jButton3.setText("Previous activities");
         jPanel17.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 170, 40));
 
-        jButton4.setText("Water intake history");
-        jPanel17.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 170, 40));
+        jButton4.setText("Trends");
+        jPanel17.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 170, 40));
 
         jLabel23.setText("<graph>");
-        jPanel17.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 180, 180));
+        jPanel17.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 200, 180));
+
+        jTextArea5.setColumns(20);
+        jTextArea5.setRows(5);
+        jTextArea5.setText("<personal details>\n");
+        jScrollPane8.setViewportView(jTextArea5);
+
+        jPanel17.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 280, 90));
+
+        jButton12.setText("Water intake history");
+        jPanel17.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 170, 40));
 
         account.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 450, 490));
 
@@ -442,7 +509,7 @@ public class HomeScreen extends javax.swing.JFrame {
         goalsPreviewTxtArea.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(125, 239, 255)));
         jScrollPane4.setViewportView(goalsPreviewTxtArea);
 
-        goals.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 230));
+        goals.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 220, 230));
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -499,118 +566,172 @@ public class HomeScreen extends javax.swing.JFrame {
         awareness.setBackground(new java.awt.Color(78, 81, 140));
         awareness.setMinimumSize(new java.awt.Dimension(514, 550));
         awareness.setPreferredSize(new java.awt.Dimension(514, 550));
+        awareness.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel9.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
-        );
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye (1).png"))); // NOI18N
+        jPanel9.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 81));
+
+        awareness.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, 130));
 
         jPanel10.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel34.setText("jLabel30");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
+        awareness.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, -1, 130));
+
         jPanel13.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel33.setText("jLabel30");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 59, Short.MAX_VALUE))
         );
 
+        awareness.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
+
         jPanel14.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel35.setText("jLabel30");
+
+        jButton9.setText("view");
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jButton9))
         );
 
+        awareness.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
+
         jPanel15.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/web (1).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel32)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
+        awareness.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
         jPanel16.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/love (1).png"))); // NOI18N
+
+        jButton11.setText("view");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel31)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jButton11))
         );
 
-        javax.swing.GroupLayout awarenessLayout = new javax.swing.GroupLayout(awareness);
-        awareness.setLayout(awarenessLayout);
-        awarenessLayout.setHorizontalGroup(
-            awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(awarenessLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
-                .addGroup(awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+        awareness.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 150, 140));
+
+        jPanel11.setBackground(new java.awt.Color(44, 42, 74));
+
+        currentGoalsHeadingLbl3.setBackground(new java.awt.Color(102, 255, 255));
+        currentGoalsHeadingLbl3.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        currentGoalsHeadingLbl3.setForeground(new java.awt.Color(153, 255, 255));
+        currentGoalsHeadingLbl3.setText("Learn Something New");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(197, Short.MAX_VALUE)
+                .addComponent(currentGoalsHeadingLbl3)
+                .addGap(170, 170, 170))
         );
-        awarenessLayout.setVerticalGroup(
-            awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(awarenessLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(awarenessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(currentGoalsHeadingLbl3)
+                .addContainerGap())
         );
+
+        awareness.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, -1));
+
+        jButton5.setText("view");
+        awareness.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, 150, -1));
+
+        jButton6.setText("view");
+        awareness.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 150, -1));
+
+        jButton7.setText("view");
+        awareness.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 150, -1));
+
+        jButton8.setText("jButton5");
+        awareness.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 150, -1));
+
+        jButton10.setText("view");
+        awareness.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 150, -1));
 
         parentPanel.add(awareness, "card6");
 
@@ -903,24 +1024,36 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel calendar;
     private javax.swing.JLabel currentGoalsHeadingLbl;
     private javax.swing.JLabel currentGoalsHeadingLbl1;
+    private javax.swing.JLabel currentGoalsHeadingLbl2;
+    private javax.swing.JLabel currentGoalsHeadingLbl3;
     private javax.swing.JPanel dashboard;
     private javax.swing.JPanel diaryEntry;
     private javax.swing.JPanel goals;
     private javax.swing.JLabel goalsLbl;
+    private javax.swing.JLabel goalsLbl1;
     private javax.swing.JList<String> goalsList;
     private javax.swing.JTextArea goalsPreviewTxtArea;
     private javax.swing.JLabel iconLbl1;
     private javax.swing.JLabel iconLbl2;
     private javax.swing.JLabel iconLbl3;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -934,10 +1067,20 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -946,6 +1089,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -959,6 +1103,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -966,10 +1111,12 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JLabel stressLevelsLbl;
