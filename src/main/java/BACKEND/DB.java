@@ -22,26 +22,32 @@ public class DB {
     private static final String username = "kyrab";
     private static final String password = "Reddam2021";
 
-    private PreparedStatement statement;
-    private ResultSet result;
-    private Connection connection;
+    private static PreparedStatement statement;
+    private static ResultSet result;
+    private static Connection connection;
 
-    public DB() throws ClassNotFoundException, SQLException {
-        //remember to add the mysql-connector-java library to the dependency list
-        Class.forName(driver);
-        System.out.println("DB: Database driver loaded");
-        connection = DriverManager.getConnection(url, username, password);
-        System.out.println("DB: Database connection established");
+    private DB(){
+        
+    }
+    
+    public static void connect() throws ClassNotFoundException, SQLException {
+        if(connection == null){
+            //remember to add the mysql-connector-java library to the dependency list
+            Class.forName(driver);
+            System.out.println("DB: Database driver loaded");
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("DB: Database connection established");
+        }
 
     }
 
-    public void update(String update) throws SQLException {
+    public static void update(String update) throws SQLException {
         statement = connection.prepareStatement(update);
         statement.executeUpdate();
         statement.close();
     }
 
-    public ResultSet query(String stmt) throws SQLException {
+    public static ResultSet query(String stmt) throws SQLException {
         statement = connection.prepareStatement(stmt);
         result = statement.executeQuery();
         return result;

@@ -5,6 +5,14 @@
  */
 package UI;
 
+import BACKEND.EntryValidator;
+import BACKEND.managers.UserManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kyra Balliram
@@ -14,8 +22,17 @@ public class SignUpScreen extends javax.swing.JFrame {
     /**
      * Creates new form SignUPScreen
      */
-    public SignUpScreen() {
+    private UserManager m;
+    private EntryValidator v;
+    private boolean firstNameValidator = true;
+    private boolean lastNameValidator = true;
+    private boolean usernameValidator = true;
+    private boolean passwordValidator = true;
+
+    public SignUpScreen(UserManager inManager) {
         initComponents();
+        m = inManager;
+        v = new EntryValidator();
     }
 
     /**
@@ -28,44 +45,55 @@ public class SignUpScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        passwordField = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        signUpBttn = new javax.swing.JButton();
+        firstNameField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        femaleButton = new javax.swing.JRadioButton();
-        maleButton = new javax.swing.JRadioButton();
-        jTextField4 = new javax.swing.JTextField();
+        lastNameField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        passwordErrorLbl = new javax.swing.JLabel();
+        firstNameErrorLbl = new javax.swing.JLabel();
+        lastNameErrorLbl = new javax.swing.JLabel();
+        usernameErrorLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(514, 550));
-        setPreferredSize(new java.awt.Dimension(514, 550));
 
         jPanel1.setBackground(new java.awt.Color(44, 42, 74));
         jPanel1.setMinimumSize(new java.awt.Dimension(514, 550));
         jPanel1.setPreferredSize(new java.awt.Dimension(514, 550));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setForeground(new java.awt.Color(78, 81, 140));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.setForeground(new java.awt.Color(78, 81, 140));
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 210, 30));
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 210, 30));
 
-        jTextField2.setForeground(new java.awt.Color(78, 81, 140));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 210, 30));
+        usernameField.setForeground(new java.awt.Color(78, 81, 140));
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 210, 30));
 
         jPanel2.setBackground(new java.awt.Color(78, 81, 140));
+        jPanel2.setForeground(new java.awt.Color(78, 81, 140));
+        jPanel2.setToolTipText("");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/c28b72a832bb4eacae54d8ca39fa12cf.png"))); // NOI18N
 
@@ -95,43 +123,58 @@ public class SignUpScreen extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(153, 255, 255));
         jLabel2.setForeground(new java.awt.Color(153, 255, 255));
         jLabel2.setText("Username:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 90, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 90, -1));
 
         jLabel3.setForeground(new java.awt.Color(153, 255, 255));
         jLabel3.setText("Password:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 60, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 60, -1));
 
-        jButton2.setText("Sign Up");
-        jButton2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 255, 255)));
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, 110, 30));
+        signUpBttn.setText("Sign Up");
+        signUpBttn.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 255, 255)));
+        signUpBttn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUpBttnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(signUpBttn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, 110, 30));
 
-        jLabel5.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel5.setForeground(new java.awt.Color(153, 255, 255));
-        jLabel5.setText("Date of Birth:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 90, 30));
-
-        jTextField3.setForeground(new java.awt.Color(78, 81, 140));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 210, 30));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 100, 30));
+        firstNameField.setForeground(new java.awt.Color(78, 81, 140));
+        firstNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                firstNameFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 210, 30));
 
         jLabel6.setBackground(new java.awt.Color(153, 255, 255));
         jLabel6.setForeground(new java.awt.Color(153, 255, 255));
         jLabel6.setText("Name:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 90, -1));
 
-        femaleButton.setText("female");
-        jPanel1.add(femaleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, -1, -1));
-
-        maleButton.setText("male");
-        jPanel1.add(maleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, -1, -1));
-
-        jTextField4.setForeground(new java.awt.Color(78, 81, 140));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 210, 30));
+        lastNameField.setForeground(new java.awt.Color(78, 81, 140));
+        lastNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lastNameFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(lastNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 210, 30));
 
         jLabel7.setBackground(new java.awt.Color(153, 255, 255));
         jLabel7.setForeground(new java.awt.Color(153, 255, 255));
         jLabel7.setText("Surname:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 90, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 90, -1));
+
+        passwordErrorLbl.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel1.add(passwordErrorLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
+
+        firstNameErrorLbl.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel1.add(firstNameErrorLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 210, 30));
+
+        lastNameErrorLbl.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel1.add(lastNameErrorLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 210, 30));
+
+        usernameErrorLbl.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel1.add(usernameErrorLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 210, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,63 +190,102 @@ public class SignUpScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void signUpBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBttnActionPerformed
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        if (firstNameValidator && lastNameValidator && usernameValidator && passwordValidator) {
+            try {
+                m.addUser(firstName, lastName, username, password);
+                dispose();
+                new HomeScreen(m).setVisible(true);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUpScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f, "incorrect format of fields");
+        }
+    }//GEN-LAST:event_signUpBttnActionPerformed
+
+    private void firstNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameFieldKeyReleased
+        String firstName = firstNameField.getText();
+        if (!v.PresenceCheck(firstName)) {
+            firstNameErrorLbl.setText("name is required");
+            firstNameValidator = false;
+        } else if (!v.checkForLetters(firstName)) {
+            firstNameErrorLbl.setText("name cannot contain numbers");
+            firstNameValidator = false;
+        } else {
+            firstNameErrorLbl.setText(" ");
+            firstNameValidator = true;
+        }
+    }//GEN-LAST:event_firstNameFieldKeyReleased
+
+    private void lastNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameFieldKeyReleased
+        String lastName = lastNameField.getText();
+        if (!v.PresenceCheck(lastName)) {
+            lastNameErrorLbl.setText("name is required");
+            lastNameValidator = false;
+        } else if (!v.checkForLetters(lastName)) {
+            lastNameErrorLbl.setText("name cannot contain numbers");
+            lastNameValidator = false;
+        } else {
+            lastNameErrorLbl.setText(" ");
+            lastNameValidator = true;
+        }
+    }//GEN-LAST:event_lastNameFieldKeyReleased
+
+    private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
+        String username = usernameField.getText();
+        if (!v.PresenceCheck(username)) {
+            usernameErrorLbl.setText("name is required");
+            usernameValidator = false;
+        } else {
+            usernameErrorLbl.setText(" ");
+            usernameValidator = true;
+        }
+    }//GEN-LAST:event_usernameFieldKeyReleased
+
+    private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
+        String password = passwordField.getText();
+        if (!v.PresenceCheck(password)) {
+            passwordErrorLbl.setText("password is required");
+            passwordValidator = false;
+        } else {
+
+            passwordErrorLbl.setText(" ");
+            passwordValidator = true;
+        }
+    }//GEN-LAST:event_passwordFieldKeyReleased
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUpScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUpScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUpScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUpScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SignUpScreen().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton femaleButton;
-    private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel firstNameErrorLbl;
+    private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JRadioButton maleButton;
+    private javax.swing.JLabel lastNameErrorLbl;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JLabel passwordErrorLbl;
+    private javax.swing.JTextField passwordField;
+    private javax.swing.JButton signUpBttn;
+    private javax.swing.JLabel usernameErrorLbl;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

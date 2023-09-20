@@ -166,7 +166,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Stress Levels:"/>
+                    <Property name="text" type="java.lang.String" value="Daily Notes"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                   <Constraints>
@@ -205,6 +205,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="add act"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addDailyNoteLblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="410" y="170" width="60" height="70"/>
@@ -217,6 +220,9 @@
                       <Image iconType="3" name="/images/neon-notes (1).png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addActivityLblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="40" y="170" width="70" height="70"/>
@@ -230,19 +236,25 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="add act"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addHydrationLevelLblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="160" y="170" width="70" height="70"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="addMedsLbl">
+                <Component class="javax.swing.JLabel" name="addSleepLbl">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/neon-notes (1).png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="add act"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addSleepLblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="290" y="170" width="60" height="70"/>
@@ -436,7 +448,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="40" y="450" width="100" height="20"/>
+                      <AbsoluteConstraints x="40" y="460" width="100" height="20"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -733,7 +745,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="239" max="32767" attributes="0"/>
-                              <Component id="currentGoalsHeadingLbl1" min="-2" max="-2" attributes="0"/>
+                              <Component id="currentYearLbl" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="222" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -742,14 +754,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="currentGoalsHeadingLbl1" min="-2" max="-2" attributes="0"/>
+                              <Component id="currentYearLbl" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="currentGoalsHeadingLbl1">
+                    <Component class="javax.swing.JLabel" name="currentYearLbl">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="66" type="rgb"/>
@@ -796,7 +808,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="jLabel27">
+                <Component class="javax.swing.JLabel" name="currentMonthLbl">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="12" style="1"/>
@@ -809,24 +821,30 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel28">
+                <Component class="javax.swing.JLabel" name="previousMonthLbl">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/angle-left (2).png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="previousMonthLblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="180" y="50" width="40" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel29">
+                <Component class="javax.swing.JLabel" name="nextMonthlbl">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/angle-right (2).png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nextMonthlblMouseClicked"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="330" y="50" width="40" height="40"/>
@@ -891,7 +909,7 @@
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="230" y="130" width="200" height="160"/>
+                          <AbsoluteConstraints x="10" y="300" width="200" height="160"/>
                         </Constraint>
                       </Constraints>
 
@@ -907,11 +925,11 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="jButton2">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Medical History"/>
+                        <Property name="text" type="java.lang.String" value="Sleep Patterns"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="30" y="190" width="170" height="40"/>
+                          <AbsoluteConstraints x="250" y="210" width="170" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -921,17 +939,17 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="30" y="140" width="170" height="40"/>
+                          <AbsoluteConstraints x="30" y="150" width="170" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton4">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Trends"/>
+                        <Property name="text" type="java.lang.String" value="mood trends"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="30" y="300" width="170" height="40"/>
+                          <AbsoluteConstraints x="250" y="150" width="170" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -941,7 +959,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="230" y="300" width="200" height="180"/>
+                          <AbsoluteConstraints x="240" y="300" width="190" height="160"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -972,7 +990,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="30" y="240" width="170" height="40"/>
+                          <AbsoluteConstraints x="30" y="210" width="170" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -984,6 +1002,9 @@
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="8c" green="51" red="4e" type="rgb"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[514, 550]"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -1186,7 +1207,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="10" y="0" width="50" height="40"/>
+                          <AbsoluteConstraints x="0" y="0" width="50" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1225,9 +1246,12 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="jLabel15"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="iconLbl3MouseClicked"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="10" y="0" width="50" height="40"/>
+                          <AbsoluteConstraints x="0" y="0" width="50" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>

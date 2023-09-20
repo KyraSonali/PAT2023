@@ -4,6 +4,9 @@
  */
 package UI;
 
+import java.util.Calendar;
+import BACKEND.managers.CalendarManager;
+import BACKEND.managers.UserManager;
 import java.awt.Dimension;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,42 +19,28 @@ import javax.swing.table.DefaultTableModel;
 public class HomeScreen extends javax.swing.JFrame {
 
     String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    private CalendarManager calendarManager = new CalendarManager();
+    private UserManager m;
 
-    int[] numDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    public String[][] getCal(int startDay, int numDaysInMonth) {
-        String[][] calendar = new String[6][7];
-        int currentDay = 1;
-        for (int week = 0; week < 7; week++) {
-            for (int day = 0; day < 7; day++) {
-
-                calendar[week][day] = currentDay + "";
-                currentDay++;
-                if (currentDay > numDaysInMonth) {
-                    break;
-                }
-
-            }
-            if (currentDay > numDaysInMonth) {
-                break;
-            }
-
-        }
-
-        return calendar;
-
-    }
-
-    public HomeScreen() {
+    public HomeScreen(UserManager inManager) {
         initComponents();
+        m = inManager;
+        // Get current month and year
+        Calendar cal = Calendar.getInstance();
+        int currentMonth = cal.get(Calendar.MONTH);
+        int currentYear = cal.get(Calendar.YEAR);
 
-        DefaultTableModel model = new DefaultTableModel(getCal(7, 28), days);
+        // Get calendar data for the current month
+        String[][] calendarData = calendarManager.getCalendarForMonth(currentMonth, currentYear);
+
+        // Create and set the table model
+        DefaultTableModel model = new DefaultTableModel(calendarData, days);
         CalendarTable.setModel(model);
-        CalendarTable.setRowHeight(100); // Set the default row height
+        CalendarTable.setRowHeight(100);
 
-//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-//        renderer.setPreferredSize(new Dimension(100, 100)); // Set preferred cell size
-//        CalendarTable.setDefaultRenderer(Object.class, renderer);
+        //set month
+        currentMonthLbl.setText(calendarManager.getCurrentMonthName());
+        currentYearLbl.setText(calendarManager.getCurrentYearString());
     }
 
     @SuppressWarnings("unchecked")
@@ -70,7 +59,7 @@ public class HomeScreen extends javax.swing.JFrame {
         addDailyNoteLbl = new javax.swing.JLabel();
         addActivityLbl = new javax.swing.JLabel();
         addHydrationLevelLbl = new javax.swing.JLabel();
-        addMedsLbl = new javax.swing.JLabel();
+        addSleepLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -100,12 +89,12 @@ public class HomeScreen extends javax.swing.JFrame {
         currentGoalsHeadingLbl2 = new javax.swing.JLabel();
         calendar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        currentGoalsHeadingLbl1 = new javax.swing.JLabel();
+        currentYearLbl = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         CalendarTable = new javax.swing.JTable();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        currentMonthLbl = new javax.swing.JLabel();
+        previousMonthLbl = new javax.swing.JLabel();
+        nextMonthlbl = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -203,7 +192,7 @@ public class HomeScreen extends javax.swing.JFrame {
         stressLevelsLbl.setBackground(new java.awt.Color(255, 255, 255));
         stressLevelsLbl.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         stressLevelsLbl.setForeground(new java.awt.Color(255, 255, 255));
-        stressLevelsLbl.setText("Stress Levels:");
+        stressLevelsLbl.setText("Daily Notes");
         stressLevelsLbl.setToolTipText("");
         dashboard.add(stressLevelsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 90, 20));
         dashboard.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 110, -1, -1));
@@ -215,18 +204,38 @@ public class HomeScreen extends javax.swing.JFrame {
 
         addDailyNoteLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/neon-notes (1).png"))); // NOI18N
         addDailyNoteLbl.setText("add act");
+        addDailyNoteLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addDailyNoteLblMouseClicked(evt);
+            }
+        });
         dashboard.add(addDailyNoteLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 60, 70));
 
         addActivityLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/neon-notes (1).png"))); // NOI18N
+        addActivityLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addActivityLblMouseClicked(evt);
+            }
+        });
         dashboard.add(addActivityLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 70, 70));
 
         addHydrationLevelLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/neon-notes (1).png"))); // NOI18N
         addHydrationLevelLbl.setText("add act");
+        addHydrationLevelLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addHydrationLevelLblMouseClicked(evt);
+            }
+        });
         dashboard.add(addHydrationLevelLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 70, 70));
 
-        addMedsLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/neon-notes (1).png"))); // NOI18N
-        addMedsLbl.setText("add act");
-        dashboard.add(addMedsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 60, 70));
+        addSleepLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/neon-notes (1).png"))); // NOI18N
+        addSleepLbl.setText("add act");
+        addSleepLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addSleepLblMouseClicked(evt);
+            }
+        });
+        dashboard.add(addSleepLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 60, 70));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -285,7 +294,7 @@ public class HomeScreen extends javax.swing.JFrame {
         goalsLbl.setForeground(new java.awt.Color(255, 255, 255));
         goalsLbl.setText("Hydration Level:");
         goalsLbl.setToolTipText("");
-        dashboard.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 100, 20));
+        dashboard.add(goalsLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, 100, 20));
 
         goalsLbl1.setBackground(new java.awt.Color(255, 255, 255));
         goalsLbl1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -359,10 +368,10 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(44, 42, 74));
 
-        currentGoalsHeadingLbl1.setBackground(new java.awt.Color(102, 255, 255));
-        currentGoalsHeadingLbl1.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        currentGoalsHeadingLbl1.setForeground(new java.awt.Color(153, 255, 255));
-        currentGoalsHeadingLbl1.setText("My Year");
+        currentYearLbl.setBackground(new java.awt.Color(102, 255, 255));
+        currentYearLbl.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        currentYearLbl.setForeground(new java.awt.Color(153, 255, 255));
+        currentYearLbl.setText("My Year");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -370,14 +379,14 @@ public class HomeScreen extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(239, Short.MAX_VALUE)
-                .addComponent(currentGoalsHeadingLbl1)
+                .addComponent(currentYearLbl)
                 .addGap(222, 222, 222))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(currentGoalsHeadingLbl1)
+                .addComponent(currentYearLbl)
                 .addContainerGap())
         );
 
@@ -405,15 +414,25 @@ public class HomeScreen extends javax.swing.JFrame {
 
         calendar.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        jLabel27.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel27.setText("<month>");
-        calendar.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 80, 20));
+        currentMonthLbl.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        currentMonthLbl.setText("<month>");
+        calendar.add(currentMonthLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 80, 20));
 
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-left (2).png"))); // NOI18N
-        calendar.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 40, 40));
+        previousMonthLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-left (2).png"))); // NOI18N
+        previousMonthLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                previousMonthLblMouseClicked(evt);
+            }
+        });
+        calendar.add(previousMonthLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 40, 40));
 
-        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-right (2).png"))); // NOI18N
-        calendar.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 40, 40));
+        nextMonthlbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/angle-right (2).png"))); // NOI18N
+        nextMonthlbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nextMonthlblMouseClicked(evt);
+            }
+        });
+        calendar.add(nextMonthlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 40, 40));
 
         parentPanel.add(calendar, "card4");
 
@@ -432,19 +451,19 @@ public class HomeScreen extends javax.swing.JFrame {
         jTextArea4.setRows(5);
         jScrollPane7.setViewportView(jTextArea4);
 
-        jPanel17.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, 160));
+        jPanel17.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 200, 160));
 
-        jButton2.setText("Medical History");
-        jPanel17.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 170, 40));
+        jButton2.setText("Sleep Patterns");
+        jPanel17.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, 40));
 
         jButton3.setText("Previous activities");
-        jPanel17.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 170, 40));
+        jPanel17.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 170, 40));
 
-        jButton4.setText("Trends");
-        jPanel17.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 170, 40));
+        jButton4.setText("mood trends");
+        jPanel17.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 170, 40));
 
         jLabel23.setText("<graph>");
-        jPanel17.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 200, 180));
+        jPanel17.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 190, 160));
 
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
@@ -454,13 +473,14 @@ public class HomeScreen extends javax.swing.JFrame {
         jPanel17.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 280, 90));
 
         jButton12.setText("Water intake history");
-        jPanel17.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 170, 40));
+        jPanel17.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 170, 40));
 
         account.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 450, 490));
 
         parentPanel.add(account, "card7");
 
         goals.setBackground(new java.awt.Color(78, 81, 140));
+        goals.setPreferredSize(new java.awt.Dimension(514, 550));
         goals.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         goalsList.setBackground(new java.awt.Color(44, 42, 74));
@@ -528,7 +548,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
         iconLbl2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/percentage (1).png"))); // NOI18N
         iconLbl2.setText("jLabel15");
-        jPanel6.add(iconLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 50, 40));
+        jPanel6.add(iconLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
         jLabel18.setText("jLabel7");
         jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 120, 30));
@@ -540,7 +560,12 @@ public class HomeScreen extends javax.swing.JFrame {
 
         iconLbl3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus (1).png"))); // NOI18N
         iconLbl3.setText("jLabel15");
-        addGoalPanel.add(iconLbl3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 50, 40));
+        iconLbl3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconLbl3MouseClicked(evt);
+            }
+        });
+        addGoalPanel.add(iconLbl3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
         jLabel7.setText("jLabel7");
         addGoalPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 120, 30));
@@ -919,6 +944,7 @@ public class HomeScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void P2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P2MouseClicked
 
         parentPanel.removeAll();
@@ -969,42 +995,89 @@ public class HomeScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_P6MouseClicked
 
     private void CalendarTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalendarTableMouseClicked
-       String day = (String) CalendarTable.getValueAt(CalendarTable.getSelectedRow(),CalendarTable.getSelectedColumn());
+        String day = (String) CalendarTable.getValueAt(CalendarTable.getSelectedRow(), CalendarTable.getSelectedColumn());
         System.out.println(day);
+        
     }//GEN-LAST:event_CalendarTableMouseClicked
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void addHydrationLevelLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addHydrationLevelLblMouseClicked
+        dispose();
+        new healthForms(m).setVisible(true);
+    }//GEN-LAST:event_addHydrationLevelLblMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomeScreen().setVisible(true);
-            }
-        });
-    }
+    private void nextMonthlblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMonthlblMouseClicked
+
+        calendarManager.nextMonth();
+        String[][] calendarData = calendarManager.getCurrentCalendar();
+        DefaultTableModel model = new DefaultTableModel(calendarData, days);
+        CalendarTable.setModel(model);
+        CalendarTable.setRowHeight(100);
+        currentMonthLbl.setText(calendarManager.getCurrentMonthName());
+        currentYearLbl.setText(calendarManager.getCurrentYearString());
+    }//GEN-LAST:event_nextMonthlblMouseClicked
+
+    private void previousMonthLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_previousMonthLblMouseClicked
+        calendarManager.previousMonth();
+        String[][] calendarData = calendarManager.getCurrentCalendar();
+        DefaultTableModel model = new DefaultTableModel(calendarData, days);
+        CalendarTable.setModel(model);
+        CalendarTable.setRowHeight(100);
+        currentMonthLbl.setText(calendarManager.getCurrentMonthName());
+        currentYearLbl.setText(calendarManager.getCurrentYearString());
+    }//GEN-LAST:event_previousMonthLblMouseClicked
+
+    private void addActivityLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addActivityLblMouseClicked
+        dispose();
+        new healthForms(m).setVisible(true);
+    }//GEN-LAST:event_addActivityLblMouseClicked
+
+    private void addSleepLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSleepLblMouseClicked
+        dispose();
+        new healthForms(m).setVisible(true);
+    }//GEN-LAST:event_addSleepLblMouseClicked
+
+    private void addDailyNoteLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDailyNoteLblMouseClicked
+        dispose();
+        new healthForms(m).setVisible(true);
+    }//GEN-LAST:event_addDailyNoteLblMouseClicked
+
+    private void iconLbl3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconLbl3MouseClicked
+        dispose();
+        new GoalSection(m).setVisible(true);
+    }//GEN-LAST:event_iconLbl3MouseClicked
+
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new HomeScreen().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CalendarTable;
@@ -1019,13 +1092,14 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel addDailyNoteLbl;
     private javax.swing.JPanel addGoalPanel;
     private javax.swing.JLabel addHydrationLevelLbl;
-    private javax.swing.JLabel addMedsLbl;
+    private javax.swing.JLabel addSleepLbl;
     private javax.swing.JPanel awareness;
     private javax.swing.JPanel calendar;
     private javax.swing.JLabel currentGoalsHeadingLbl;
-    private javax.swing.JLabel currentGoalsHeadingLbl1;
     private javax.swing.JLabel currentGoalsHeadingLbl2;
     private javax.swing.JLabel currentGoalsHeadingLbl3;
+    private javax.swing.JLabel currentMonthLbl;
+    private javax.swing.JLabel currentYearLbl;
     private javax.swing.JPanel dashboard;
     private javax.swing.JPanel diaryEntry;
     private javax.swing.JPanel goals;
@@ -1071,9 +1145,6 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -1118,7 +1189,9 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel nextMonthlbl;
     private javax.swing.JPanel parentPanel;
+    private javax.swing.JLabel previousMonthLbl;
     private javax.swing.JLabel stressLevelsLbl;
     private javax.swing.JLabel userImage;
     // End of variables declaration//GEN-END:variables
