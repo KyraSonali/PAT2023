@@ -29,47 +29,31 @@ public class User {
         return userID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
+ 
     public String getUserFirstname() {
         return userFirstname;
     }
 
-    public void setUserFirstname(String userFirstname) {
-        this.userFirstname = userFirstname;
-    }
+   
 
     public String getUserLastName() {
         return userLastName;
     }
 
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
 
 
 
-    @Override
-    public String toString() {
-        return "User{" + "username=" + username + ", userPassword=" + userPassword + '}';
-    }
+
 
 }

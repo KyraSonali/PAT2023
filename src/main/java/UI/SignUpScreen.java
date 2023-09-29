@@ -6,6 +6,7 @@
 package UI;
 
 import BACKEND.EntryValidator;
+import BACKEND.managers.AppManager;
 import BACKEND.managers.UserManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,16 +23,15 @@ public class SignUpScreen extends javax.swing.JFrame {
     /**
      * Creates new form SignUPScreen
      */
-    private UserManager m;
     private EntryValidator v;
     private boolean firstNameValidator = true;
     private boolean lastNameValidator = true;
     private boolean usernameValidator = true;
     private boolean passwordValidator = true;
 
-    public SignUpScreen(UserManager inManager) {
+    public SignUpScreen() {
         initComponents();
-        m = inManager;
+
         v = new EntryValidator();
     }
 
@@ -49,18 +49,19 @@ public class SignUpScreen extends javax.swing.JFrame {
         usernameField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         signUpBttn = new javax.swing.JButton();
         firstNameField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         lastNameField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         passwordErrorLbl = new javax.swing.JLabel();
         firstNameErrorLbl = new javax.swing.JLabel();
         lastNameErrorLbl = new javax.swing.JLabel();
         usernameErrorLbl = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(514, 550));
@@ -97,19 +98,32 @@ public class SignUpScreen extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/c28b72a832bb4eacae54d8ca39fa12cf.png"))); // NOI18N
 
+        jLabel6.setBackground(new java.awt.Color(153, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel6.setText("<Log In Screen");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(199, 199, 199)
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(172, 172, 172)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(208, Short.MAX_VALUE))
         );
@@ -146,11 +160,6 @@ public class SignUpScreen extends javax.swing.JFrame {
         });
         jPanel1.add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 210, 30));
 
-        jLabel6.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel6.setForeground(new java.awt.Color(153, 255, 255));
-        jLabel6.setText("Name:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 90, -1));
-
         lastNameField.setForeground(new java.awt.Color(78, 81, 140));
         lastNameField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -176,6 +185,11 @@ public class SignUpScreen extends javax.swing.JFrame {
         usernameErrorLbl.setForeground(new java.awt.Color(153, 153, 255));
         jPanel1.add(usernameErrorLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 210, 30));
 
+        jLabel8.setBackground(new java.awt.Color(153, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel8.setText("Name:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 90, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,18 +213,18 @@ public class SignUpScreen extends javax.swing.JFrame {
         String lastName = lastNameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+    
         if (firstNameValidator && lastNameValidator && usernameValidator && passwordValidator) {
             try {
-                m.addUser(firstName, lastName, username, password);
+                AppManager.userManager.addUser(firstName, lastName, username, password);
                 dispose();
-                new HomeScreen(m).setVisible(true);
-
+                new HomeScreen().setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(SignUpScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JFrame f = new JFrame();
-            JOptionPane.showMessageDialog(f, "incorrect format of fields");
+            JOptionPane.showMessageDialog(f, "Incorrect format of fields");
         }
     }//GEN-LAST:event_signUpBttnActionPerformed
 
@@ -265,6 +279,17 @@ public class SignUpScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_passwordFieldKeyReleased
 
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        dispose();
+        try {
+            new LogInScreen().setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SignUpScreen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUpScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel6MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +303,7 @@ public class SignUpScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lastNameErrorLbl;

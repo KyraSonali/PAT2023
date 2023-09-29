@@ -4,11 +4,27 @@
  */
 package UI;
 
+import BACKEND.managers.AppManager;
 import BACKEND.managers.GoalManager;
 import BACKEND.managers.UserManager;
+import java.awt.Dialog;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.Temporal;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -19,12 +35,11 @@ public class GoalSection extends javax.swing.JFrame {
     /**
      * Creates new form GoalSection
      */
-    private UserManager m;
-    private GoalManager gm;
-    public GoalSection(UserManager inManager) {
+    private String generatedPlanStr;
+
+    public GoalSection() {
         initComponents();
-        m=inManager;
-     
+
     }
 
     /**
@@ -40,25 +55,23 @@ public class GoalSection extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         currentGoalsHeadingLbl1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        helpLbl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        specificGoalTxt = new javax.swing.JTextField();
+        typeOfGoalComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        usersInputTxt = new javax.swing.JTextArea();
         generatePlanBttn = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        startDatePicker = new com.toedter.calendar.JDateChooser();
+        endDatePicker = new com.toedter.calendar.JDateChooser();
         addGoalToCalBttn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        generatedPlanBox = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +95,15 @@ public class GoalSection extends javax.swing.JFrame {
             }
         });
 
+        helpLbl.setForeground(new java.awt.Color(255, 255, 255));
+        helpLbl.setText("Help");
+        helpLbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(181, 229, 237)));
+        helpLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                helpLblMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -91,7 +113,9 @@ public class GoalSection extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(180, 180, 180)
                 .addComponent(currentGoalsHeadingLbl1)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addComponent(helpLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,7 +123,8 @@ public class GoalSection extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentGoalsHeadingLbl1)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(helpLbl))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -121,50 +146,35 @@ public class GoalSection extends javax.swing.JFrame {
         jLabel5.setText("Specify Goal:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        specificGoalTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                specificGoalTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 200, 30));
+        jPanel1.add(specificGoalTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 200, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal goal", "Academic goal", "Social goal", "Physical goal" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 160, 30));
+        typeOfGoalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal goal", "Academic goal", "Social goal", "Physical goal" }));
+        jPanel1.add(typeOfGoalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 160, 30));
 
         jLabel6.setForeground(new java.awt.Color(153, 255, 255));
-        jLabel6.setText("How can you achieve this?");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 150, 20));
+        jLabel6.setText("Extra Information:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 150, 20));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        usersInputTxt.setColumns(20);
+        usersInputTxt.setRows(5);
+        jScrollPane1.setViewportView(usersInputTxt);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 200, 170));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 200, 180));
 
         generatePlanBttn.setText("Generate your plan");
-        jPanel1.add(generatePlanBttn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jRadioButton1.setText("jRadioButton1");
-        jPanel2.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 45, -1, -1));
-
-        jRadioButton2.setText("jRadioButton2");
-        jPanel2.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 86, -1, -1));
-
-        jRadioButton3.setText("jRadioButton3");
-        jPanel2.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 127, -1, -1));
-
-        jRadioButton4.setText("jRadioButton4");
-        jPanel2.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 168, -1, -1));
-
-        jLabel7.setText("Your plan:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 220, 210));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 200, 30));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 200, 30));
+        generatePlanBttn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatePlanBttnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(generatePlanBttn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
+        jPanel1.add(startDatePicker, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 200, 30));
+        jPanel1.add(endDatePicker, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 200, 30));
 
         addGoalToCalBttn.setText("Add goal to calendar");
         addGoalToCalBttn.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +182,18 @@ public class GoalSection extends javax.swing.JFrame {
                 addGoalToCalBttnActionPerformed(evt);
             }
         });
-        jPanel1.add(addGoalToCalBttn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 170, -1));
+        jPanel1.add(addGoalToCalBttn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, 170, -1));
+
+        jLabel7.setText("Your plan:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, -1, 20));
+
+        generatedPlanBox.setBackground(new java.awt.Color(153, 153, 255));
+        generatedPlanBox.setColumns(20);
+        generatedPlanBox.setForeground(new java.awt.Color(44, 42, 74));
+        generatedPlanBox.setRows(5);
+        jScrollPane2.setViewportView(generatedPlanBox);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 270, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,26 +210,92 @@ public class GoalSection extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       dispose();
-       new HomeScreen(m).setVisible(true);
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void addGoalToCalBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGoalToCalBttnActionPerformed
+        dispose();
         try {
-            gm = new GoalManager();
-            int currentUser = m.getCurrentUser();
-            
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GoalSection.class.getName()).log(Level.SEVERE, null, ex);
+            new HomeScreen().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(GoalSection.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void specificGoalTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specificGoalTxtActionPerformed
+
+    }//GEN-LAST:event_specificGoalTxtActionPerformed
+
+    private void addGoalToCalBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGoalToCalBttnActionPerformed
+        JFrame error = new JFrame();
+        String typeOfGoal = (String) typeOfGoalComboBox.getSelectedItem();
+        String specificGoal = specificGoalTxt.getText();
+        java.util.Date startDate = startDatePicker.getDate();
+        java.util.Date endDate = endDatePicker.getDate();
+        LocalDate goalStartDate = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate goalEndDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String getGeneratedPlan = generatedPlanBox.getText();
+        int userId = AppManager.userManager.getCurrentUserID();
+        int stepsCompleted = 0;
+        try {
+            AppManager.goalManager.addGoal(userId, typeOfGoal, specificGoal, getGeneratedPlan, goalStartDate, goalEndDate, stepsCompleted);
+            if (startDatePicker.getDate() == null || endDatePicker.getDate() == null) {
+                JOptionPane.showMessageDialog(error, "please eneter start and end dates ");
+
+            }
+            JOptionPane.showMessageDialog(error, "successfully added");
+        } catch (SQLException ex) {
+            Logger.getLogger(GoalSection.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(error, "plan need to be shortened");
+        }
+
+
     }//GEN-LAST:event_addGoalToCalBttnActionPerformed
+
+    private void generatePlanBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePlanBttnActionPerformed
+
+        String usersInput = this.usersInputTxt.getText();
+        String usersSpecificGoal = specificGoalTxt.getText();
+        JDialog loadingDialog = new JDialog(this, "Loading", Dialog.ModalityType.APPLICATION_MODAL);
+        JLabel loadingLabel = new JLabel("Loading...", SwingConstants.CENTER);
+        loadingDialog.add(loadingLabel);
+        loadingDialog.setSize(200, 100);
+        loadingDialog.setLocationRelativeTo(this);
+        SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
+            @Override
+            protected String doInBackground() {
+                try {
+                    String usersInput = usersInputTxt.getText();
+                    String encodedGoal = URLEncoder.encode(specificGoalTxt.getText(), StandardCharsets.UTF_8);
+                    String encodedUserInput = URLEncoder.encode(usersInput, StandardCharsets.UTF_8);
+                    String request = "Make a step by step plan that will allow me to complete my goal of " + encodedGoal + ". please incorporate this extra information:" + encodedUserInput + " return your response in numbered points  and restrict response to less than 2000 words.";
+                    String response = AppManager.bot.askChatBot(request);
+                    return response.replace("'", "''");
+                } catch (IOException ex) {
+                    Logger.getLogger(GoalSection.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    generatedPlanStr = get();
+                    if (generatedPlanStr != null) {
+                        generatedPlanBox.setText(generatedPlanStr);
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                } finally {
+                    loadingDialog.dispose(); 
+                }
+            }
+        };
+        worker.execute();
+        loadingDialog.setVisible(true); 
+
+    }//GEN-LAST:event_generatePlanBttnActionPerformed
+
+    private void helpLblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpLblMousePressed
+        JFrame helpMenu = new JFrame();
+        JOptionPane.showMessageDialog(helpMenu, "In order for a goal to be added all fields must be filled. \n Your generated plan will take a few seconds.\n Once your plan is generated you can edit it in the box to fit your needs.");
+    }//GEN-LAST:event_helpLblMousePressed
 
     /**
      * @param args the command line arguments
@@ -248,10 +335,10 @@ public class GoalSection extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addGoalToCalBttn;
     private javax.swing.JLabel currentGoalsHeadingLbl1;
+    private com.toedter.calendar.JDateChooser endDatePicker;
     private javax.swing.JButton generatePlanBttn;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JTextArea generatedPlanBox;
+    private javax.swing.JLabel helpLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -260,14 +347,12 @@ public class GoalSection extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField specificGoalTxt;
+    private com.toedter.calendar.JDateChooser startDatePicker;
+    private javax.swing.JComboBox<String> typeOfGoalComboBox;
+    private javax.swing.JTextArea usersInputTxt;
     // End of variables declaration//GEN-END:variables
 }

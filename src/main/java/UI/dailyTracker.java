@@ -5,6 +5,13 @@
  */
 package UI;
 
+import BACKEND.managers.AppManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Kyra Balliram
@@ -14,8 +21,59 @@ public class dailyTracker extends javax.swing.JFrame {
     /**
      * Creates new form dailyTracker
      */
-    public dailyTracker() {
+    public dailyTracker() throws SQLException {
         initComponents();
+        try {
+            //set Diary entry+ date 
+            dateLbl.setText(HomeScreen.diaryDateSelected);
+            ArrayList<String> modelOne = AppManager.diaryManager.getdiaryEntries(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+            for (String a : modelOne) {
+                diaryEntryTXt.append(a + "============================\n");
+
+            }
+            //set mood rating 
+            ArrayList<Integer> modelTwo = AppManager.diaryManager.getMoodRatings(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+            StringBuilder ratingsText = new StringBuilder();
+            for (int a : modelTwo) {
+                if (ratingsText.length() > 0) {
+                    ratingsText.append(", ");
+                }
+                ratingsText.append(a);
+            }
+            moodRatingTxt.setText(ratingsText.toString());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(dailyTracker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //set feeligs text field 
+        ArrayList<String> modelThree = AppManager.diaryManager.getFeeling(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+        StringBuilder feelingsText = new StringBuilder();
+        for (String a : modelThree) {
+            if (feelingsText.length() > 0) {
+                feelingsText.append(", ");
+            }
+            feelingsText.append(a);
+        }
+        feelingTxt.setText(feelingsText.toString());
+
+        //set upcoming dealinesL
+        // Call the getUpcomingGoals method and store the resulting ArrayList
+        ArrayList<String> upcomingGoals = AppManager.goalManager.getGoalsDue(HomeScreen.diaryDateSelected);
+        DefaultListModel p = new DefaultListModel();
+        p.addAll(upcomingGoals);
+        dealinesList.setModel(p);
+
+        //set hhydration,sleep,activities
+        int userHydrationLevel = AppManager.healthManager.getHydration(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+        hydrationLvlTxt.setText(userHydrationLevel + " ");
+
+        int amountOfSleep = AppManager.healthManager.getSleepAmount(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+        amountOfSleepTxt.setText(amountOfSleep + " ");
+
+        String activities = AppManager.healthManager.getPhysicalActivities(AppManager.userManager.getCurrentUserID(), HomeScreen.diaryDateSelected);
+        physicalActivitiesTxt.setText(activities + "\n");
+
     }
 
     /**
@@ -30,24 +88,25 @@ public class dailyTracker extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        dealinesList = new javax.swing.JList<>();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        amountOfSleepTxt = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        moodRatingTxt = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        diaryEntryTXt = new javax.swing.JTextArea();
         jLabel21 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        feelingTxt = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jTextField4 = new javax.swing.JTextField();
+        physicalActivitiesTxt = new javax.swing.JTextArea();
+        hydrationLvlTxt = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         currentGoalsHeadingLbl = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        dateLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,13 +119,13 @@ public class dailyTracker extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(44, 42, 74));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jList1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        dealinesList.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        dealinesList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(dealinesList);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 42, 213, 112));
 
@@ -80,31 +139,32 @@ public class dailyTracker extends javax.swing.JFrame {
         jLabel18.setText("Mood for today:");
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 20, 100, -1));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        amountOfSleepTxt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        amountOfSleepTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                amountOfSleepTxtActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 163, 30));
+        jPanel2.add(amountOfSleepTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 163, 30));
 
         jLabel19.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(218, 191, 255));
         jLabel19.setText("Amount of Sleep:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 100, -1));
 
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 42, 163, 30));
+        moodRatingTxt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        jPanel2.add(moodRatingTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 42, 163, 30));
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(218, 191, 255));
         jLabel20.setText("Feeling:");
         jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 91, 100, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jScrollPane2.setViewportView(jTextArea1);
+        diaryEntryTXt.setEditable(false);
+        diaryEntryTXt.setColumns(20);
+        diaryEntryTXt.setRows(5);
+        diaryEntryTXt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        jScrollPane2.setViewportView(diaryEntryTXt);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 212, 213, 250));
 
@@ -113,33 +173,33 @@ public class dailyTracker extends javax.swing.JFrame {
         jLabel21.setText("Diary Entry:");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 184, 100, -1));
 
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        feelingTxt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        feelingTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                feelingTxtActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 119, 163, 30));
+        jPanel2.add(feelingTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 119, 163, 30));
 
         jLabel22.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(218, 191, 255));
         jLabel22.setText("Physical Activites:");
         jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 339, 119, -1));
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jScrollPane3.setViewportView(jTextArea2);
+        physicalActivitiesTxt.setColumns(20);
+        physicalActivitiesTxt.setRows(5);
+        physicalActivitiesTxt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        jScrollPane3.setViewportView(physicalActivitiesTxt);
 
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 362, -1, 100));
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 362, 170, 100));
 
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        hydrationLvlTxt.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(218, 191, 255)));
+        hydrationLvlTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                hydrationLvlTxtActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 163, 30));
+        jPanel2.add(hydrationLvlTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 163, 30));
 
         jLabel23.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(218, 191, 255));
@@ -152,10 +212,21 @@ public class dailyTracker extends javax.swing.JFrame {
         currentGoalsHeadingLbl.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         currentGoalsHeadingLbl.setForeground(new java.awt.Color(153, 255, 255));
         currentGoalsHeadingLbl.setText("Daily Tracker:");
-        jPanel1.add(currentGoalsHeadingLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 103, 25));
+        jPanel1.add(currentGoalsHeadingLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 103, 25));
 
+        jLabel1.setBackground(new java.awt.Color(153, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(153, 255, 255));
         jLabel1.setText("<Home");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 19));
+
+        dateLbl.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        dateLbl.setForeground(new java.awt.Color(153, 255, 255));
+        jPanel1.add(dateLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 160, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,55 +242,74 @@ public class dailyTracker extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void amountOfSleepTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountOfSleepTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_amountOfSleepTxtActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void feelingTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feelingTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_feelingTxtActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void hydrationLvlTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hydrationLvlTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_hydrationLvlTxtActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        try {
+            dispose();
+            new HomeScreen().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(dailyTracker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments //
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new dailyTracker().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(dailyTracker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    new dailyTracker().setVisible(true);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(dailyTracker.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField amountOfSleepTxt;
     private javax.swing.JLabel currentGoalsHeadingLbl;
+    private javax.swing.JLabel dateLbl;
+    private javax.swing.JList<String> dealinesList;
+    private javax.swing.JTextArea diaryEntryTXt;
+    private javax.swing.JTextField feelingTxt;
+    private javax.swing.JTextField hydrationLvlTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -228,17 +318,12 @@ public class dailyTracker extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField moodRatingTxt;
+    private javax.swing.JTextArea physicalActivitiesTxt;
     // End of variables declaration//GEN-END:variables
 }

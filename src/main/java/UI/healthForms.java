@@ -4,7 +4,18 @@
  */
 package UI;
 
+import BACKEND.managers.AppManager;
 import BACKEND.managers.UserManager;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
 
 /**
  *
@@ -15,11 +26,11 @@ public class healthForms extends javax.swing.JFrame {
     /**
      * Creates new form healthForms
      */
-    
-    private UserManager m;
-    public healthForms(UserManager inManager) {
+    public static ArrayList<String> UserActivities = new ArrayList<>();
+
+    public healthForms() {
         initComponents();
-        m=inManager;
+
     }
 
     /**
@@ -32,24 +43,26 @@ public class healthForms extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        physicalHealthPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jSlider3 = new javax.swing.JSlider();
+        sleepLvlSlider = new javax.swing.JSlider();
         jLabel8 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
+        hydrationLvlSlider = new javax.swing.JSlider();
+        physicalActivitiesField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        weightSpinner = new javax.swing.JSpinner();
+        sleepLvlTxt = new javax.swing.JTextField();
+        hydrationLvlTxt = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        userActivitiesList = new javax.swing.JList<>();
+        dateEnteredPicker = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         currentGoalsHeadingLbl = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,62 +70,99 @@ public class healthForms extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(514, 550));
         jPanel1.setPreferredSize(new java.awt.Dimension(514, 550));
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(44, 42, 74));
-        jLabel1.setText("Hours of sleep:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 127, 16));
+        physicalHealthPanel.setBackground(new java.awt.Color(153, 153, 255));
+        physicalHealthPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(44, 42, 74));
-        jLabel2.setText("Weight:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 70, 16));
+        jLabel2.setText("Date:");
+        physicalHealthPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 70, 16));
 
         jButton1.setText("Add");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 120, -1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        physicalHealthPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 120, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 255, 255)));
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 190, 190));
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(44, 42, 74));
-        jLabel7.setText("Daily Notes:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 70, 20));
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 255, 255)));
-        jScrollPane2.setViewportView(jTextArea2);
-
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 170, 190));
-        jPanel2.add(jSlider3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, -1));
+        sleepLvlSlider.setMajorTickSpacing(2);
+        sleepLvlSlider.setMaximum(24);
+        sleepLvlSlider.setPaintLabels(true);
+        sleepLvlSlider.setPaintTicks(true);
+        sleepLvlSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sleepLvlSliderMouseReleased(evt);
+            }
+        });
+        physicalHealthPanel.add(sleepLvlSlider, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 320, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(44, 42, 74));
         jLabel8.setText("Physical Activities:");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 130, 20));
+        physicalHealthPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 20));
 
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 255, 255)));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, 20));
+        hydrationLvlSlider.setMajorTickSpacing(1000);
+        hydrationLvlSlider.setMaximum(4000);
+        hydrationLvlSlider.setMinorTickSpacing(250);
+        hydrationLvlSlider.setPaintLabels(true);
+        hydrationLvlSlider.setPaintTicks(true);
+        hydrationLvlSlider.setSnapToTicks(true);
+        hydrationLvlSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                hydrationLvlSliderMouseReleased(evt);
+            }
+        });
+        physicalHealthPanel.add(hydrationLvlSlider, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 320, -1));
 
-        jButton2.setText("Add");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 120, -1));
-        jPanel2.add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        physicalActivitiesField.setBackground(new java.awt.Color(44, 42, 74));
+        physicalActivitiesField.setForeground(new java.awt.Color(255, 255, 255));
+        physicalActivitiesField.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 255, 255)));
+        physicalHealthPanel.add(physicalActivitiesField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 20));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(44, 42, 74));
-        jLabel4.setText("Hydration Level Today:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 150, 16));
-        jPanel2.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 80, 40));
+        jLabel4.setText("Hydration Level Today:(mm)");
+        physicalHealthPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 180, 16));
+
+        weightSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                weightSpinnerStateChanged(evt);
+            }
+        });
+        physicalHealthPanel.add(weightSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 80, 40));
+
+        sleepLvlTxt.setEditable(false);
+        physicalHealthPanel.add(sleepLvlTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 50, 30));
+
+        hydrationLvlTxt.setEditable(false);
+        physicalHealthPanel.add(hydrationLvlTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 50, 30));
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(44, 42, 74));
+        jLabel5.setText("Hours of sleep:");
+        physicalHealthPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 127, 16));
+
+        userActivitiesList.setBackground(new java.awt.Color(44, 42, 74));
+        userActivitiesList.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 255, 255)));
+        userActivitiesList.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(userActivitiesList);
+
+        physicalHealthPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 180, 190));
+        physicalHealthPanel.add(dateEnteredPicker, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 190, 40));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(44, 42, 74));
+        jLabel6.setText("Weight:");
+        physicalHealthPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 70, 16));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Kyra Balliram\\OneDrive\\Documents\\NetBeansProjects\\PAT2023\\src\\main\\resources\\images\\physical (1) (1).png")); // NOI18N
+        jLabel1.setText("button");
+        physicalHealthPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 140, 110));
 
         currentGoalsHeadingLbl.setBackground(new java.awt.Color(102, 255, 255));
         currentGoalsHeadingLbl.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
@@ -127,6 +177,14 @@ public class healthForms extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(153, 153, 255));
+        jButton2.setText("submit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,13 +192,18 @@ public class healthForms extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(currentGoalsHeadingLbl)
                 .addGap(204, 204, 204))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(physicalHealthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +212,11 @@ public class healthForms extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentGoalsHeadingLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(physicalHealthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,7 +227,7 @@ public class healthForms extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
         );
 
         pack();
@@ -170,8 +235,71 @@ public class healthForms extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         dispose();
-        new HomeScreen(m).setVisible(true);
+        try {
+            new HomeScreen().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(healthForms.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void hydrationLvlSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hydrationLvlSliderMouseReleased
+        int c = hydrationLvlSlider.getValue();
+        hydrationLvlTxt.setText(c + " ");
+    }//GEN-LAST:event_hydrationLvlSliderMouseReleased
+
+    private void sleepLvlSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sleepLvlSliderMouseReleased
+        int c = sleepLvlSlider.getValue();
+        sleepLvlTxt.setText(c + " ");
+    }//GEN-LAST:event_sleepLvlSliderMouseReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String activity = physicalActivitiesField.getText();
+        UserActivities.add(activity);
+        //setUserActivities list
+        DefaultListModel x = new DefaultListModel();
+        x.addAll(UserActivities);
+        userActivitiesList.setModel(x);
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void weightSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_weightSpinnerStateChanged
+        int min = 30;
+        int max = 200;
+        int weightValue = (int) weightSpinner.getValue();
+        if (weightValue < min) {
+            weightSpinner.setValue(min);
+        } else if (weightValue > max) {
+            weightSpinner.setValue(max);
+        }
+    }//GEN-LAST:event_weightSpinnerStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFrame message = new JFrame();
+        int hydrationValue = hydrationLvlSlider.getValue();
+        int amountOfSleep = sleepLvlSlider.getValue();
+        StringBuilder m = new StringBuilder();
+        //get list and turn it into a string
+        for (String s : UserActivities) {
+            m.append(s + " ");
+        }
+
+        String list = m.toString();
+        list = list.trim();
+        int weight = (int) weightSpinner.getValue();
+        java.util.Date datePicked = dateEnteredPicker.getDate();
+        LocalDate date = datePicked.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        try {
+            AppManager.healthManager.addHealth(AppManager.userManager.getCurrentUserID(), hydrationValue, amountOfSleep, list, weight,date);
+
+            JOptionPane.showMessageDialog(message, "successfully Added");
+        } catch (SQLException ex) {
+            Logger.getLogger(healthForms.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(message, "could not be Added");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,23 +338,25 @@ public class healthForms extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel currentGoalsHeadingLbl;
+    private com.toedter.calendar.JDateChooser dateEnteredPicker;
+    private javax.swing.JSlider hydrationLvlSlider;
+    private javax.swing.JTextField hydrationLvlTxt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider3;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField physicalActivitiesField;
+    private javax.swing.JPanel physicalHealthPanel;
+    private javax.swing.JSlider sleepLvlSlider;
+    private javax.swing.JTextField sleepLvlTxt;
+    private javax.swing.JList<String> userActivitiesList;
+    private javax.swing.JSpinner weightSpinner;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package BACKEND.managers;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 /**
@@ -94,5 +95,15 @@ public class CalendarManager {
     public String[][] getCurrentCalendar() {
         return getCalendarForMonth(currentMonth, currentYear);
     }
+
+    public int getCurrentMonth() {
+        return currentMonth + 1; 
+    }
+
+    public int getCurrentYear() {
+        return currentYear;
+    }
+    
+    
 
 }

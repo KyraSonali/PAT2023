@@ -5,7 +5,7 @@
  */
 package BACKEND.objects;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 
 /**
@@ -19,10 +19,11 @@ public class UserGoals {
     private String typeOfGoal;
     private String specificGoal;
     private String stepsToCompleteGoal;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int stepsCompleted;
 
-    public UserGoals(int inGoalID, int inUserId, String inTypeOfGoal , String inSpecificGoal, String inStepsToCompleteGoal, Date inStartDate, Date inEndDate){
+    public UserGoals(int inGoalID, int inUserId, String inTypeOfGoal , String inSpecificGoal, String inStepsToCompleteGoal, LocalDate inStartDate, LocalDate inEndDate,int inStepsCompleted){
         goalID = inGoalID;
         userID = inUserId;
         typeOfGoal= inTypeOfGoal;
@@ -30,7 +31,16 @@ public class UserGoals {
         stepsToCompleteGoal = inStepsToCompleteGoal;
         startDate = inStartDate;
         endDate = inEndDate;
+       stepsCompleted= inStepsCompleted;
         
+    }
+
+    public void setStepsCompleted(int stepsCompleted) {
+        this.stepsCompleted = stepsCompleted;
+    }
+
+    public int getStepsCompleted() {
+        return stepsCompleted;
     }
 
     public int getGoalID() {
@@ -58,21 +68,19 @@ public class UserGoals {
 
 
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
 
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    @Override
-    public String toString() {
-        return "UserGoals{" + "goalID=" + goalID + ", userID=" + userID + ", typeOfGoal=" + typeOfGoal + ", specificGoal=" + specificGoal + ", stepsToCompleteGoal=" + stepsToCompleteGoal + ", startDate=" + startDate + ", endDate=" + endDate + '}';
-    }
+   
 
+ 
  
     
     

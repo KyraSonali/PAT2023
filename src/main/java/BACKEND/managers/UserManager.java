@@ -9,24 +9,12 @@ package BACKEND.managers;
  * @author Kyrab
  */
 import BACKEND.DB;
-import BACKEND.DB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import BACKEND.objects.User;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 public class UserManager {
 
@@ -34,10 +22,9 @@ public class UserManager {
     private User[] pArr = new User[100];
 
     private int size;
- 
 
     public UserManager() throws ClassNotFoundException, SQLException {
-       
+
         size = 0;
 
         String query = "SELECT * FROM kyrabDB.users";
@@ -82,18 +69,18 @@ public class UserManager {
         return false;
     }
 
-    public int getCurrentUser() {
+    public int getCurrentUserID() {
         int id = currentUser.getUserID();
         return id;
     }
 
     public void addUser(String firstName, String lastName, String username, String password) throws SQLException {
         //add user to databse
-        String query = " INSERT INTO kyrabDB.users (firstName,lastName,username,Password) VALUES( '" + firstName + "','" + lastName + "','" + username + "','" + password + "')";
+        String query = " INSERT INTO kyrabDB.users (firstName,lastName,username,Password) VALUES( '" + firstName + "','" + lastName + "','" + username + "','" + password + "');";
         System.out.println(query);
         DB.update(query);
         //retrieve generated query
-        String getIdquery = "SELECT idusers\n" + "FROM kyrabDB.users\n" + "WHERE firstName='" + firstName + "' AND lastName='" + lastName + "'";
+        String getIdquery = "SELECT idusers\n" + "FROM kyrabDB.users\n" + "WHERE firstName='" + firstName + "' AND lastName='" + lastName + "'" + "";
         //move to next line
         ResultSet IDquery = DB.query(getIdquery);
         IDquery.next();
@@ -105,10 +92,48 @@ public class UserManager {
         size++;
 
     }
-    
-    
-    //login
-    //sets current user.
-    //UI -> AppManager.userManager.login(user, password);
+
+    public String getUserDetails(int userId) {
+        StringBuilder userDetails = new StringBuilder();
+
+        String query = "SELECT firstName, lastName, username, password \n"
+                + "FROM kyrabDB.users \n"
+                + "WHERE idusers = " + userId;
+
+        try {
+            ResultSet data = DB.query(query);
+            while (data.next()) {
+                String firstName = data.getString("firstName");
+                String lastName = data.getString("lastName");
+                String username = data.getString("username");
+                String password = data.getString("password");
+
+                userDetails.append("First Name: ").append(firstName).append("\n");
+                userDetails.append("Last Name: ").append(lastName).append("\n");
+                userDetails.append("Username: ").append(username).append("\n");
+                userDetails.append("Password: ").append(password).append("\n");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error in fetching user details");
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userDetails.toString();
+    }
+
+    public String getFullName(int userId) throws SQLException {
+        StringBuilder userFullName = new StringBuilder();
+        String query = "SELECT firstName, lastName \n"
+                + "FROM kyrabDB.users \n"
+                + "WHERE idusers = " + userId;
+
+        ResultSet data = DB.query(query);
+        data.next();
+        String fName = data.getString("firstName");
+        String lastName = data.getString("lastName");
+        userFullName.append(fName).append(" ").append(lastName);
+        return userFullName.toString();
+
+    }
 
 }

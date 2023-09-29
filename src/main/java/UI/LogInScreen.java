@@ -6,6 +6,9 @@ package UI;
 
 import BACKEND.EntryValidator;
 import BACKEND.managers.AppManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -19,15 +22,16 @@ public class LogInScreen extends javax.swing.JFrame {
      * Creates new form LogInScreena
      */
   
-    private AppManager n;
+    
     private EntryValidator v;
     private boolean usernameValidator = true;
     private boolean passwordValidator = true;
 
-    public LogInScreen(AppManager inManager) {
+    public LogInScreen() throws ClassNotFoundException, SQLException {
         initComponents();
-        n = inManager;
+      
         v = new EntryValidator();
+        AppManager.init();
     }
 
  
@@ -164,20 +168,24 @@ public class LogInScreen extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         dispose();
-        new SignUpScreen(n.userManager).setVisible(true);
+        new SignUpScreen().setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void logInBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInBttnActionPerformed
         String username = usernameTxtField.getText();
         String password = passwordTxtField.getText();
         if (usernameValidator && passwordValidator) {
-            if (n.userManager.checkUser(username, password)) {
+            if (AppManager.userManager.checkUser(username, password)) {
                 dispose();
-                new HomeScreen(n.userManager).setVisible(true);
+                try {
+                    new HomeScreen().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(LogInScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             } else {
                 JFrame f = new JFrame();
-                JOptionPane.showMessageDialog(f, "cannot find user");
+                JOptionPane.showMessageDialog(f, "username or password is insorrect");
             }
         } else {
             JFrame f = new JFrame();
@@ -240,7 +248,13 @@ public class LogInScreen extends javax.swing.JFrame {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LogInScreen(AppManager.init()).setVisible(true);
+                try {
+                    new LogInScreen().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(LogInScreen.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(LogInScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
